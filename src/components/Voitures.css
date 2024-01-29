@@ -1,0 +1,26 @@
+.voiture-details {
+    max-width: 840px;
+    margin: auto;
+    text-align: center;
+  }
+  
+.image {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #4bd178;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  button:hover {
+    background-color: #9fa0a0; /* Darker Blue on hover */
+  }
+  
