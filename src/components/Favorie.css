@@ -1,0 +1,87 @@
+.container {
+    max-width: 840px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    overflow: hidden;
+  }
+  
+  .listItem {
+    margin-right: 10px; 
+  }
+  
+  .list-container {
+    display: flex;
+    justify-content: space-between; 
+  }
+  
+  .avant-container,
+  .apres-container {
+    display: flex;
+    align-items: center; 
+  }
+  
+  .avant-container button,
+  .apres-container button {
+    background: none;
+    font-size: 15px;
+    cursor: pointer;
+    color: #000;
+    display: inline-block;
+    border-radius: 20px;
+    border: 4px double #cccccc;
+    text-align: center;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .avant-container button:hover,
+  .apres-container button:hover {
+    background-color: #cccccc;
+    color: #fff;
+  }
+  
+  .image {
+    width: 200px;
+    height: 150px;
+    margin-bottom: 10px;
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #7986CB;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+
+  .error {
+    width: 500px;
+    height: 100px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f8d7da; 
+    color: #721c24; 
+    border: 1px solid #f5c6cb; 
+    padding: 20px 20px; 
+    border-radius: 5px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+  }
+  

@@ -1,66 +1,42 @@
 import React, { useState,useEffect } from "react";
-import { Link } from "react-router-dom";
-import { config, library } from "@fortawesome/fontawesome-svg-core";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import "./Home.css";
+import "./Favorie.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import axios from "axios";
 
-// Configuration de la bibliothèque FontAwesome
-config.autoAddCss = false; // Désactiver l'ajout automatique des styles
 
-// Ajout des icônes à la bibliothèque
-library.add(faAngleLeft, faAngleRight);
-
-
-const Home = () => {
-  const carsPerPage = 3;
-  const [currentPage, setCurrentPage] = useState(1);
+const Favorie = () => {
+    const carsPerPage = 3;
+    const [currentPage, setCurrentPage] = useState(1);
 
 
-  const [annonces,setAnnonces] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [loadingInsert, setLoadingInsert] = useState(true);
-  const [errorInsert, setErrorInsert] = useState(null);
-  
-  const fetchData = async() => {
+    const [annonces,setAnnonces] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    
+    
+    const fetchData = async () => {
     try {
+      const token = localStorage.getItem('token');  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      };
+  
       const annonceResponse = await axios.get(
-        "https://annoncevoiture-production.up.railway.app/annonce/annonce"
+        "https://annoncevoiture-production.up.railway.app/annonce-login/annoncefavuser",
+        config
       );
+        
       setAnnonces(annonceResponse.data);
-      
       setLoading(false);
     } catch (error) {
       setError(error);
       setLoading(false);
     }
   };
+  
 
-  
-  const handleAdd = async (id) => {
-    try {
-      const token = localStorage.getItem("token");
-      setLoadingInsert(true);
-      
-      // Include the token in the request headers
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      };
-      
-      // Send POST request with token included in headers
-      await axios.post('https://annoncevoiture-production.up.railway.app/annonce-login/annoncefav', { idAnnonce: id }, config);
-      
-      setLoadingInsert(false);
-    } catch (errorInsert) {
-      setErrorInsert(errorInsert);
-      setLoadingInsert(false);
-    }
-  };
-  
 
   const totalPages = Math.ceil(annonces.length / carsPerPage);
 
@@ -86,9 +62,7 @@ const Home = () => {
   }, []);
 
   if (loading) return <div className="spinner"></div>
-  if (error) return <div>Error: {error.message}</div>
-  if (errorInsert) return <div>Error: {errorInsert.message}</div>
-
+  if (error) return <div className="error">Connectez vous s'il-vous-plait</div>
 
   return (
     <div className="container">
@@ -111,15 +85,14 @@ const Home = () => {
                 <img src={`/images`}  className="image" />
               <div>
 
-                <p>Proprietaire : {annonce.user.nomUtilisateur} <button onClick={() => handleAdd(annonce.idAnnonce)}>Ajouter en favorie</button></p>
+                <p>Proprietaire : {annonce.user.nomUtilisateur} <button>Contacter</button></p>
                 <p>Marque : {annonce.voiture.marque.nomMarque}</p>
                 <p>Categorie :{annonce.voiture.categorie.nomCategorie}</p>
                 <p>Prix : {annonce.voiture.prix}</p>
                 <p>Kilometrage : {annonce.voiture.kilometrage}</p>
                 <p>Moteur : {annonce.voiture.moteur.nomMoteur}</p>
                 <p>Date : {new Date(annonce.dateAnnonce).toLocaleDateString()}</p>
-                
-              </div>
+                </div>
               </li>
           ))}
         </ul>
@@ -132,5 +105,4 @@ const Home = () => {
     </div>
   );
 };
-
-export default Home;
+export default Favorie;

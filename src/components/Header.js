@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Header.css";
 
 const Header = ({ history, handleSubmit }) => {
   const [showLogin, setShowLogin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
 
   const handleLogin = () => {
     setShowLogin(true);
@@ -16,25 +17,58 @@ const Header = ({ history, handleSubmit }) => {
     setShowLogin(false);
   };
 
-  const handleLogout= () => {
-    localStorage.removeItem('token');
-  }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
 
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        const response = await axios.get(
+          "https://annoncevoiture-production.up.railway.app/annonce-login/utilisateur",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setUser(response.data);
+      }
+    } catch (error) {
+      // Handle error, e.g., redirect to login page
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []); // Empty dependency array means this effect runs only once after the component mounts
 
   const handleLoginFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('https://annoncevoiture-production.up.railway.app/annonce/signin', {
-        mail: email,
-        motDePasse: password
-      });
-      
-      console.log('Login successful:', response.data);
+      const response = await axios.post(
+        "https://annoncevoiture-production.up.railway.app/annonce/signin",
+        {
+          mail: email,
+          motDePasse: password,
+        }
+      );
+
+      console.log("Login successful:", response.data);
       // Store the token in localStorage
-      localStorage.setItem('token', response.data.token);
-      closeLogin()
+      localStorage.setItem("token", response.data.token);
+      window.location.reload();
+      closeLogin();
+
+      // Fetch user data after successful login
+      fetchUserData();
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error);
     }
   };
 
@@ -52,6 +86,9 @@ const Header = ({ history, handleSubmit }) => {
             <li className="nav-item">
               <a href="/messages">Messages</a>
             </li>
+            <li className="nav-item">
+              <a href="/favorie">Favorie</a>
+            </li>
           </ul>
         </nav>
 
@@ -60,13 +97,15 @@ const Header = ({ history, handleSubmit }) => {
           <button onClick={handleSubmit}><span className="search-icon">&#128269;</span></button>
         </div>
 
+        {user && (<p>{user.nomUtilisateur}</p>)}
+
         <button className="login-button" onClick={handleLogin}>
           Connexion
         </button>
 
-        <button className="login-button" onClick={handleLogout}>
+        {user && (<button className="login-button" onClick={handleLogout}>
           Logout
-        </button>
+        </button>)}
 
         {showLogin && <div className="blur-overlay" onClick={closeLogin} />}
 
@@ -107,5 +146,4 @@ const Header = ({ history, handleSubmit }) => {
     </header>
   );
 };
-
 export default Header;

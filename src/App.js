@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import Voitures from "./components/Voitures";
 import Footer from "./components/Footer";
+import Favorie from "./components/Favorie";
 import Messages from "./components/Messages";
 
 const App = () => {
@@ -41,8 +42,12 @@ const App = () => {
             path="/messages"
             element={<Messages/>}
           />
+          <Route
+            path="/favorie"
+            element={<Favorie/>}
+          />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </Router>
   );
