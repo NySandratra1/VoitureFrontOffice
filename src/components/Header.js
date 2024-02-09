@@ -16,6 +16,11 @@ const Header = ({ history, handleSubmit }) => {
     setShowLogin(false);
   };
 
+  const handleLogout= () => {
+    localStorage.removeItem('token');
+  }
+
+
   const handleLoginFormSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -26,7 +31,8 @@ const Header = ({ history, handleSubmit }) => {
       
       console.log('Login successful:', response.data);
       // Store the token in localStorage
-      localStorage.setItem('accessToken', response.data.token);
+      localStorage.setItem('token', response.data.token);
+      closeLogin()
     } catch (error) {
       setError(error.response.data.message);
     }
@@ -56,6 +62,10 @@ const Header = ({ history, handleSubmit }) => {
 
         <button className="login-button" onClick={handleLogin}>
           Connexion
+        </button>
+
+        <button className="login-button" onClick={handleLogout}>
+          Logout
         </button>
 
         {showLogin && <div className="blur-overlay" onClick={closeLogin} />}

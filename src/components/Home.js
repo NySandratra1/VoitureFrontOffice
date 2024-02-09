@@ -40,7 +40,7 @@ const Home = () => {
   const handleAdd = (id) => {
     try {
       setLoadingInsert(true);
-      axios.post('http://annoncevoiture-production.up.railway.app/annonce-login/annoncefav', { idAnnonce : id });
+      axios.post('https://annoncevoiture-production.up.railway.app/annonce-login/annoncefav', { idAnnonce : id });
       setLoadingInsert(false);
     } catch (errorInsert) {
       setErrorInsert(errorInsert);
@@ -79,7 +79,7 @@ const Home = () => {
 
   return (
     <div className="container">
-      <h1 className="heading">Bienvenue sur notre service de location de voiture</h1>
+      <h1 className="heading">Bienvenue sur notre service de vente de voiture</h1>
       <p className="paragraph">
         Découvrez notre large sélection de voitures et trouvez celle qui
         correspond à vos besoins.
@@ -104,7 +104,7 @@ const Home = () => {
                 <p>Prix : {annonce.voiture.prix}</p>
                 <p>Kilometrage : {annonce.voiture.kilometrage}</p>
                 <p>Moteur : {annonce.voiture.moteur.nomMoteur}</p>
-                <p>Date : {annonce.dateAnnonce}</p>
+                <p>Date : {new Date(annonce.dateAnnonce).toLocaleDateString()}</p>
                 <p><button onClick={() => handleAdd(annonce.idAnnonce)}>Ajouter en tant que Favorie</button></p>
               </div>
               </li>
