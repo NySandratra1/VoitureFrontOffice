@@ -66,11 +66,8 @@ const Favorie = () => {
 
   return (
     <div className="container">
-      <h1 className="heading">Bienvenue sur notre service de vente de voiture</h1>
-      <p className="paragraph">
-        Découvrez notre large sélection de voitures et trouvez celle qui
-        correspond à vos besoins.
-      </p>
+      <h1 className="heading">Vos annonces favorites</h1>
+      
 
       <h2 className="subHeading">Voitures Disponibles</h2>
       <div className="list-container">

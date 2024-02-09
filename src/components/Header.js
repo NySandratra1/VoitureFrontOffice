@@ -123,7 +123,7 @@ const Header = ({ history, handleSubmit }) => {
                   type="text" 
                   id="email" 
                   name="email" 
-                  value={email} 
+                  value="Kawaiisandy2@gmail.com" 
                   onChange={(e) => setEmail(e.target.value)} 
                 />
               </p>
@@ -133,7 +133,7 @@ const Header = ({ history, handleSubmit }) => {
                   type="password" 
                   id="password" 
                   name="password" 
-                  value={password} 
+                  value="1234" 
                   onChange={(e) => setPassword(e.target.value)} 
                 />
               </p>
