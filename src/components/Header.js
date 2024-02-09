@@ -4,8 +4,8 @@ import "./Header.css";
 
 const Header = ({ history, handleSubmit }) => {
   const [showLogin, setShowLogin] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("Kawaiisandy2@gmail.com");
+  const [password, setPassword] = useState("1234");
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
 
@@ -123,7 +123,7 @@ const Header = ({ history, handleSubmit }) => {
                   type="text" 
                   id="email" 
                   name="email" 
-                  value="Kawaiisandy2@gmail.com" 
+                  value={email} 
                   onChange={(e) => setEmail(e.target.value)} 
                 />
               </p>
@@ -133,7 +133,7 @@ const Header = ({ history, handleSubmit }) => {
                   type="password" 
                   id="password" 
                   name="password" 
-                  value="1234" 
+                  value={password} 
                   onChange={(e) => setPassword(e.target.value)} 
                 />
               </p>
